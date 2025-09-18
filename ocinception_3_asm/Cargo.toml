@@ -1,0 +1,16 @@
+[package]
+name = "ocinception_3"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[features]
+# Compress with gzip instead of zstd
+gzip = ["dep:miniz_oxide", "use-alloc"]
+# Define a global allocator
+use-alloc = []
+# Display some debug messages
+with-debug = []
+
+[dependencies]
+miniz_oxide = { version = "0.8.9", optional = true, default-features = false, features = ["with-alloc"] }

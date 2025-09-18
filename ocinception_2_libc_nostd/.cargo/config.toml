@@ -1,0 +1,43 @@
+[build]
+rustflags = [
+    "-Cforce-frame-pointers=no",
+    "-Cforce-unwind-tables=no",
+    "-Crelocation-model=static",
+    "-Clink-args=-no-pie",
+    "-Clink-args=-O2",
+    "-Cllvm-args=-align-all-blocks=0",
+    "-Cllvm-args=-align-all-functions=0",
+]
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+#strip = true
+
+[unstable]
+# These flags prevent using cargo test
+#build-std = ["core", "alloc"]
+#build-std-features = ["optimize_for_size"]
+#panic-abort-tests = true
+
+[target.x86_64-unknown-none]
+linker = "rust-lld"
+rustflags = [
+    "-Cforce-frame-pointers=no",
+    "-Cforce-unwind-tables=no",
+    "-Crelocation-model=static",
+    "-Clink-args=-no-pie",
+    "-Clink-args=-O2",
+    "-Cllvm-args=-align-all-blocks=0",
+    "-Cllvm-args=-align-all-functions=0",
+    # Flags specific to rust-lld
+    "-Clink-args=--omagic",
+    "-Clink-args=--no-eh-frame-hdr",
+    "-Clink-args=--no-rosegment",
+    "-Clink-args=--fatal-warnings",
+]

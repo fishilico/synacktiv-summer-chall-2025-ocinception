@@ -1,0 +1,27 @@
+[package]
+name = "ocinception_1"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[features]
+# Compress with gzip
+gz = ["dep:miniz_oxide"]
+# Compress with zstd
+zstd = ["dep:zstd"]
+# Use Docker archive format instead of OCI
+docker-archive = []
+# Write the size in binary in the tar header, instead of octal
+tar-binary-size = []
+# Never use the argument as the fake digest for the manifest file
+never-use-arg-as-manifest-digest = []
+# Merge the image config with the index
+merge-config-index = []
+
+#default = ["merge-config-index"]
+
+[dependencies]
+hex = "0.4.3"
+miniz_oxide = { version = "0.8.9", optional = true, default-features = false, features = ["with-alloc"] }
+sha2 = "0.10.9"
+zstd = { version = "0.13.3", optional = true, default-features = false }

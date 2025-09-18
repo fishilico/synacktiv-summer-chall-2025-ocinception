@@ -1,0 +1,22 @@
+[package]
+name = "ocinception_2"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[features]
+# Use Rust standard library
+std = []
+# Compress with GZip
+gzip = ["dep:miniz_oxide", "use-alloc"]
+# Compress with Zstandard
+zstd = []
+# Define a global allocator from a global array
+use-alloc = []
+# Define a global allocator based on libc's malloc/free instead of a global array
+use-libc-alloc = []
+# Display some debug messages
+with-debug = []
+
+[dependencies]
+miniz_oxide = { version = "0.8.9", optional = true, default-features = false, features = ["with-alloc"] }

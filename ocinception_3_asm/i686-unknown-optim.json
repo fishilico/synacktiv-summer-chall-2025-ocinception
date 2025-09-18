@@ -1,0 +1,36 @@
+{
+  "arch": "x86",
+  "cpu": "pentium4",
+  "data-layout": "e-m:e-p:32:32-p270:32:32-p271:32:32-p272:64:64-i128:128-f64:32:64-f80:32-n8:16:32-S128",
+  "dynamic-linking": false,
+  "executables": true,
+  "linker": "rust-lld",
+  "linker-flavor": "ld.lld",
+  "llvm-target": "i686-unknown-optim",
+  "os": "none",
+  "env": "optim",
+  "pre-link-args": {
+    "gnu-cc": [
+      "-m32"
+    ],
+    "gnu-lld-cc": [
+      "-m32"
+    ]
+  },
+  "relro-level": "full",
+  "rustc-abi": "x86-sse2",
+  "stack-probes": {
+    "kind": "inline"
+  },
+  "supported-split-debuginfo": [
+    "packed",
+    "unpacked",
+    "off"
+  ],
+  "target-c-int-width": 32,
+  "target-endian": "little",
+  "target-family": [
+    "unix"
+  ],
+  "target-pointer-width": 32
+}
