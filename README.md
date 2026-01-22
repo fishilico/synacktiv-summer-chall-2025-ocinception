@@ -29,18 +29,24 @@ vagrant@bookworm:~$ cd /vagrant/ocinception_1_rust_std/
 vagrant@bookworm:/vagrant/ocinception_1_rust_std$ ./test_features.sh
   2784 
   2784 tar-binary-size
+  1666 docker-archive
+  1666 docker-archive,tar-binary-size
   2784 never-use-arg-as-manifest-digest
   2323 merge-config-index
    408 gz
-   423 gz,tar-binary-size
-   411 gz,never-use-arg-as-manifest-digest
-   411 gz,merge-config-index
-   391 zstd
-   409 zstd,tar-binary-size
-   393 zstd,never-use-arg-as-manifest-digest
-   403 zstd,merge-config-index
+   421 gz,tar-binary-size
+   246 gz,docker-archive
+   253 gz,docker-archive,tar-binary-size
+   410 gz,never-use-arg-as-manifest-digest
+   413 gz,merge-config-index
+   390 zstd
+   406 zstd,tar-binary-size
+   240 zstd,docker-archive
+   245 zstd,docker-archive,tar-binary-size
+   395 zstd,never-use-arg-as-manifest-digest
+   404 zstd,merge-config-index
 
-# Best score is 391
+# Best score is 391 when using OCI images, 240 with docker-archive format
 
 vagrant@bookworm:/vagrant/ocinception_1_rust_std$ cd ../ocinception_2_libc_nostd/
 vagrant@bookworm:/vagrant/github/ocinception_2_libc_nostd$ ./test_all.py --quiet

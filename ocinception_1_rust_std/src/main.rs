@@ -143,7 +143,7 @@ fn main() {
     // Craft an image configuration file
     // https://github.com/opencontainers/image-spec/blob/v1.1.1/config.md
     let image_config = if cfg!(feature = "docker-archive") {
-        format!(r#"{{"config":{{"entrypoint":["/{PROGRAM_NAME}"]}},"rootfs":{{"type":"layers","diff_ids":["sha256:{layer_tar_sha256}"]}}}}"#)
+        format!(r#"{{"config":{{"entrypoint":["/{PROGRAM_NAME}"]}},"rootfs":{{"diff_ids":["sha256:{layer_tar_sha256}"]}}}}"#)
     } else if cfg!(feature = "merge-config-index") {
         // Merge the index with the configuration
         format!(
@@ -157,14 +157,15 @@ fn main() {
     // Craft an image manifest file
     // https://github.com/opencontainers/image-spec/blob/v1.1.1/manifest.md
     let image_manifest = if cfg!(feature = "docker-archive") {
+        // Use an empty file name for the configuration, so remove field "config"
         if arg_tag == "latest" {
             format!(
-                r#"[{{"Config":"c","Layers":["l"],"RepoTags":["ocinception_{NICKNAME}:{arg_tag}"]}}]"#
+                r#"[{{"layers":["l"],"repotags":["ocinception_{NICKNAME}:{arg_tag}"]}}]"#
             )
         } else {
             // Remove the layer
             format!(
-                r#"[{{"Config":"c","RepoTags":["ocinception_{NICKNAME}:{arg_tag}"]}}]"#
+                r#"[{{"layers":[""],"repotags":["ocinception_{NICKNAME}:{arg_tag}"]}}]"#
             )
         }
     } else {
@@ -201,7 +202,6 @@ fn main() {
         add_tar_padding(&mut image_tar_bytes);
 
         let mut config_header = [0u8; 512];
-        config_header[0] = b'c';
         set_tar_header_size_cksum(&mut config_header, image_config.len());
         image_tar_bytes.extend(config_header);
         image_tar_bytes.extend(&image_config);

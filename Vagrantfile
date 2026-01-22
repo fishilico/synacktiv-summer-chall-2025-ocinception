@@ -22,6 +22,9 @@ Vagrant.configure("2") do |config|
         echo >&2 "Warning: unexpected podman version: $(podman --version)"
     fi
 
+    # Configure an overlay storage driver
+    printf '[storage]\ndriver = "overlay"\n' > /etc/containers/storage.conf
+
     if ! [ -e /home/vagrant/.cargo/bin/rustup ] ; then
         # https://www.rust-lang.org/tools/install
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > /tmp/rustup-install.sh

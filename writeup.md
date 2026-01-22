@@ -622,6 +622,9 @@ Some other ideas can be experimented:
   Like OCI images, this format uses Tar and can be compressed.
   Nevertheless, Podman does not support removing the layer from such an archive: doing so triggers an error, "Inconsistent layer count: 0 in manifest, 1 in config".
 
+  - Actually, [Synacktiv's solution](https://www.synacktiv.com/en/publications/2025-summer-challenge-writeup) uses the Docker archive format and work around this issue by adding a file with an empty name to the archive.
+    This way, when `podman load` sees the manifest with `"layers":[""]`, it knows there is a file, and when it sees the configuration with the right SHA256 digest of the layer, it uses it.
+
 - Zstandard compression format includes an optional checksum which can be disabled (contrary to GZip).
 
 - The SHA256 digest of some blobs can be modified to see whether Podman actually verifies them.
